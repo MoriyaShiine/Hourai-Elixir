@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-        maven { url = "https://files.minecraftforge.net/maven" }
+        maven { url = "https://files.minecraftforge.net/maven/" }
         jcenter()
         mavenCentral()
     }
@@ -9,13 +9,16 @@ buildscript {
     }
 }
 apply plugin: "net.minecraftforge.gradle"
+apply plugin: "eclipse"
 
 version = "1.0.2.3"
 group = "moriyashiine.houraielixir"
 archivesBaseName = "houraielixir"
 
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = "1.8"
+
 minecraft {
-    mappings channel: "stable", version: "60-1.15"
+    mappings channel: "snapshot", version: "20200418-1.15.1"
     runs {
         client {
             workingDirectory project.file("run")

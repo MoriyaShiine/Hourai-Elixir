@@ -1,5 +1,6 @@
-package moriyashiine.houraielixir;
+package moriyashiine.houraielixir.common.capability;
 
+import moriyashiine.houraielixir.HouraiElixir;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -31,11 +32,12 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+/** File created by mason on 4/18/20 **/
 public class HouraiCapability implements ICapabilitySerializable<CompoundNBT> {
 	@CapabilityInject(HouraiCapability.class)
-	static Capability<HouraiCapability> CAP = null;
+	public static Capability<HouraiCapability> CAP = null;
 	
-	boolean immortal = false;
+	public boolean immortal = false;
 	private byte timer = 0;
 	
 	@Nonnull
@@ -54,7 +56,7 @@ public class HouraiCapability implements ICapabilitySerializable<CompoundNBT> {
 		CAP.readNBT(this, null, nbt);
 	}
 	
-	static void register() {
+	public static void setup() {
 		CapabilityManager.INSTANCE.register(HouraiCapability.class, new HouraiCapability.Storage(), HouraiCapability::new);
 		MinecraftForge.EVENT_BUS.register(new Handler());
 	}
@@ -122,7 +124,9 @@ public class HouraiCapability implements ICapabilitySerializable<CompoundNBT> {
 			LivingEntity entity = event.getEntityLiving();
 			if (!entity.world.isRemote) {
 				entity.getCapability(CAP).ifPresent(houraiCap -> {
-					if (houraiCap.immortal && houraiCap.timer <= 0 && !event.getPotionEffect().getPotion().isBeneficial()) event.setResult(Event.Result.DENY);
+					if (houraiCap.immortal && houraiCap.timer <= 0 && !event.getPotionEffect().getPotion().isBeneficial()) {
+						event.setResult(Event.Result.DENY);
+					}
 				});
 			}
 		}
@@ -145,7 +149,7 @@ public class HouraiCapability implements ICapabilitySerializable<CompoundNBT> {
 							if (serverWorld != null) {
 								BlockPos bed = player.getBedLocation(player.getSpawnDimension());
 								BlockPos spawnPos = bed == null ? serverWorld.getSpawnPoint() : bed;
-								player.func_200619_a(serverWorld, spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), player.rotationYaw, player.rotationPitch);
+								player.teleport(serverWorld, spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), player.rotationYaw, player.rotationPitch);
 							}
 						}
 					}

@@ -1,5 +1,7 @@
-package moriyashiine.houraielixir;
+package moriyashiine.houraielixir.common.item;
 
+import moriyashiine.houraielixir.HouraiElixir;
+import moriyashiine.houraielixir.common.capability.HouraiCapability;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,20 +18,21 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
+/** File created by mason on 4/18/20 **/
 public class HouraiElixirItem extends Item {
-	HouraiElixirItem() {
+	public HouraiElixirItem() {
 		super(new Properties().group(ItemGroup.MISC).rarity(Rarity.EPIC).maxStackSize(1));
 	}
 	
 	@Override
 	@Nonnull
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, @Nonnull Hand hand) {
+	public ActionResult<ItemStack> onItemRightClick(@Nonnull World world, @Nonnull PlayerEntity player, @Nonnull Hand hand) {
 		return Items.POTION.onItemRightClick(world, player, hand);
 	}
 	
 	@Override
 	@Nonnull
-	public UseAction getUseAction(ItemStack stack) {
+	public UseAction getUseAction(@Nonnull ItemStack stack) {
 		return Items.POTION.getUseAction(stack);
 	}
 	
@@ -40,8 +43,8 @@ public class HouraiElixirItem extends Item {
 		if (entity instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) entity;
 			entity.getCapability(HouraiCapability.CAP).ifPresent(houraiCap -> {
-				String message = HouraiElixir.MODID + (houraiCap.immortal ? ".already_immortal" : ".become_immortal");
-				if (!world.isRemote) player.sendStatusMessage(new TranslationTextComponent(message), false);
+				String message = "message." + HouraiElixir.MODID + (houraiCap.immortal ? ".already_immortal" : ".become_immortal");
+				if (!world.isRemote) player.sendStatusMessage(new TranslationTextComponent(message), true);
 				houraiCap.immortal = true;
 				if (!player.isCreative()) fin.set(new ItemStack(Items.GLASS_BOTTLE));
 			});
@@ -50,12 +53,12 @@ public class HouraiElixirItem extends Item {
 	}
 	
 	@Override
-	public int getUseDuration(ItemStack stack) {
+	public int getUseDuration(@Nonnull ItemStack stack) {
 		return Items.POTION.getUseDuration(stack);
 	}
 	
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltips, ITooltipFlag flags) {
-		tooltips.add(new TranslationTextComponent(HouraiElixir.MODID + ".tooltip").applyTextStyle(TextFormatting.GRAY));
+	public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<ITextComponent> tooltips, @Nonnull ITooltipFlag flags) {
+		tooltips.add(new TranslationTextComponent("tooltip." + HouraiElixir.MODID + ".hourai_elixir").applyTextStyle(TextFormatting.GRAY));
 	}
 }
