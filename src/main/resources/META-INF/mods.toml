@@ -1,21 +1,21 @@
-modLoader="javafml" #mandatory
-loaderVersion="[31,)" #mandatory
-issueTrackerURL="https://github.com/MoriyaShiine/hourai-elixir/issues" #optional
-[[mods]] #mandatory
-modId="houraielixir" #mandatory
-version="${file.jarVersion}" #mandatory
-displayName="Hourai Elixir" #mandatory
-displayURL="https://www.curseforge.com/minecraft/mc-mods/hourai-elixir" #optional
-logoFile="icon.png" #optional
-authors="MoriyaShiine, cybercat5555" #optional
+modLoader="javafml"
+loaderVersion="[31,)"
+issueTrackerURL="https://github.com/MoriyaShiine/hourai-elixir/issues"
+[[mods]]
+modId="houraielixir"
+version="${file.jarVersion}"
+displayName="Hourai Elixir"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/hourai-elixir"
+logoFile="icon.png"
+authors="MoriyaShiine, cybercat5555"
 description='''An (unobtainable) overpowered item that grants immortality'''
-[[dependencies.houraielixir]] #optional
-    modId="forge" #mandatory
-    mandatory=true #mandatory
-    versionRange="[31,)" #mandatory
+[[dependencies.bewitchment]]
+    modId="forge"
+    mandatory=true
+    versionRange="[31,)"
     ordering="NONE"
     side="BOTH"
-[[dependencies.houraielixir]]
+[[dependencies.bewitchment]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.15.2]"
