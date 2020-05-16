@@ -5,7 +5,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-/** File created by mason on 4/18/20 **/
 @Mod(HouraiElixir.MODID)
 public class HouraiElixir {
     public static final String MODID = "houraielixir";
