@@ -18,7 +18,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-/** File created by mason on 4/18/20 **/
 public class HouraiElixirItem extends Item {
 	public HouraiElixirItem() {
 		super(new Properties().group(ItemGroup.MISC).rarity(Rarity.EPIC).maxStackSize(1));
