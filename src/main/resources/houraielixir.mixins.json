@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "moriyashiine.houraielixir.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+	"HouraiTracker",
+	"HouraiTracker$Server",
+	"HouraiHandler"
+  ],
+  "injectors": {
+	"defaultRequire": 1
+  }
+}

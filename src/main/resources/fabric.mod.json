@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "houraielixir",
+  "version": "${version}",
+  "name": "Hourai Elixir",
+  "description": "An (unobtainable) overpowered item that grants immortality",
+  "authors": [
+	"MoriyaShiine",
+	"cybercat5555"
+  ],
+  "contact": {
+	"homepage": "https://www.curseforge.com/minecraft/mc-mods/hourai-elixir",
+	"sources": "https://github.com/MoriyaShiine/hourai-elixir"
+  },
+  "license": "GPL-3.0",
+  "icon": "assets/houraielixir/icon.png",
+  "environment": "*",
+  "entrypoints": {
+	"main": [
+	  "moriyashiine.houraielixir.HouraiElixir"
+	]
+  },
+  "mixins": [
+	"houraielixir.mixins.json"
+  ],
+  "depends": {
+	"fabricloader": ">=0.7.4",
+	"fabric": "*",
+	"minecraft": "1.16.x"
+  },
+  "suggests": {
+	"flamingo": "*"
+  }
+}
