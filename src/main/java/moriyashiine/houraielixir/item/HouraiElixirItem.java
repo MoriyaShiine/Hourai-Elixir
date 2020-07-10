@@ -1,7 +1,7 @@
 package moriyashiine.houraielixir.item;
 
 import moriyashiine.houraielixir.HouraiElixir;
-import moriyashiine.houraielixir.misc.HEDataTrackers;
+import moriyashiine.houraielixir.misc.HouraiAccessor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;
@@ -37,14 +37,11 @@ public class HouraiElixirItem extends Item {
 	
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-		if (user instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity) user;
-			String message = "message." + HouraiElixir.MODID + (HEDataTrackers.getImmortal(player) ? ".already_immortal" : ".become_immortal");
-			if (!player.world.isClient) {
-				player.sendMessage(new TranslatableText(message), true);
-			}
-			HEDataTrackers.setImmortal(player, true);
+		HouraiAccessor hourai = ((HouraiAccessor) user);
+		if (!user.world.isClient && user instanceof PlayerEntity) {
+			((PlayerEntity) user).sendMessage(new TranslatableText("message." + HouraiElixir.MODID + (hourai.getImmortal() ? ".already_immortal" : ".become_immortal")), true);
 		}
+		hourai.setImmortal(true);
 		return Items.POTION.finishUsing(stack, world, user);
 	}
 	
