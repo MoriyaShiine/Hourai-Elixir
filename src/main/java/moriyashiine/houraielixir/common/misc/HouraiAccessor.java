@@ -1,4 +1,4 @@
-package moriyashiine.houraielixir.misc;
+package moriyashiine.houraielixir.common.misc;
 
 public interface HouraiAccessor {
 	boolean getImmortal();

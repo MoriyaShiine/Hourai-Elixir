@@ -17,7 +17,7 @@
   "environment": "*",
   "entrypoints": {
 	"main": [
-	  "moriyashiine.houraielixir.HouraiElixir"
+	  "moriyashiine.houraielixir.common.HouraiElixir"
 	]
   },
   "mixins": [

@@ -1,11 +1,14 @@
-package moriyashiine.houraielixir.mixin;
+package moriyashiine.houraielixir.common.mixin;
 
 import com.mojang.authlib.GameProfile;
-import moriyashiine.houraielixir.misc.HouraiAccessor;
+import moriyashiine.houraielixir.common.misc.HouraiAccessor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,9 +28,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public abstract class HouraiHandler extends Entity implements HouraiAccessor {
-	private boolean immortal = false;
+	private static final TrackedData<Boolean> IMMORTAL = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 	
-	private int weaknessTimer = 0;
+	private static final TrackedData<Integer> WEAKNESS_TIMER = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
 	
 	protected HouraiHandler(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
@@ -35,22 +38,22 @@ public abstract class HouraiHandler extends Entity implements HouraiAccessor {
 	
 	@Override
 	public boolean getImmortal() {
-		return immortal;
+		return dataTracker.get(IMMORTAL);
 	}
 	
 	@Override
 	public void setImmortal(boolean immortal) {
-		this.immortal = immortal;
+		dataTracker.set(IMMORTAL, immortal);
 	}
 	
 	@Override
 	public int getWeaknessTimer() {
-		return weaknessTimer;
+		return dataTracker.get(WEAKNESS_TIMER);
 	}
 	
 	@Override
 	public void setWeaknessTimer(int weaknessTimer) {
-		this.weaknessTimer = weaknessTimer;
+		dataTracker.set(WEAKNESS_TIMER, weaknessTimer);
 	}
 	
 	@Shadow
@@ -122,15 +125,22 @@ public abstract class HouraiHandler extends Entity implements HouraiAccessor {
 	}
 	
 	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
-	public void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
+	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
 		setImmortal(tag.getBoolean("Immortal"));
 		setWeaknessTimer(tag.getInt("WeaknessTimer"));
 	}
 	
 	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
-	public void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
+	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
 		tag.putBoolean("Immortal", getImmortal());
 		tag.putInt("WeaknessTimer", getWeaknessTimer());
+	}
+	
+	@Inject(method = "initDataTracker", at = @At("TAIL"))
+	private void initDataTracker(CallbackInfo callbackInfo)
+	{
+		dataTracker.startTracking(IMMORTAL, false);
+		dataTracker.startTracking(WEAKNESS_TIMER, 0);
 	}
 	
 	@Mixin(ServerPlayerEntity.class)
@@ -140,7 +150,7 @@ public abstract class HouraiHandler extends Entity implements HouraiAccessor {
 		}
 		
 		@Inject(method = "copyFrom", at = @At("TAIL"))
-		public void copyFrom(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo callbackInfo) {
+		private void copyFrom(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo callbackInfo) {
 			HouraiAccessor oldHourai = ((HouraiAccessor) oldPlayer);
 			setImmortal(oldHourai.getImmortal());
 			setWeaknessTimer(oldHourai.getWeaknessTimer());
