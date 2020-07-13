@@ -1,7 +1,7 @@
 package moriyashiine.houraielixir.common.item;
 
+import moriyashiine.houraielixir.api.accessor.HouraiAccessor;
 import moriyashiine.houraielixir.common.HouraiElixir;
-import moriyashiine.houraielixir.common.api.accessor.HouraiAccessor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;

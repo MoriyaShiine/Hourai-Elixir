@@ -1,7 +1,7 @@
 package moriyashiine.houraielixir.common.mixin;
 
 import com.mojang.authlib.GameProfile;
-import moriyashiine.houraielixir.common.api.accessor.HouraiAccessor;
+import moriyashiine.houraielixir.api.accessor.HouraiAccessor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
