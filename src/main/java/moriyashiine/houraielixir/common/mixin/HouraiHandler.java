@@ -137,8 +137,7 @@ public abstract class HouraiHandler extends Entity implements HouraiAccessor {
 	}
 	
 	@Inject(method = "initDataTracker", at = @At("TAIL"))
-	private void initDataTracker(CallbackInfo callbackInfo)
-	{
+	private void initDataTracker(CallbackInfo callbackInfo) {
 		dataTracker.startTracking(IMMORTAL, false);
 		dataTracker.startTracking(WEAKNESS_TIMER, 0);
 	}
