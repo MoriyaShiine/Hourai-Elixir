@@ -1,4 +1,4 @@
-package moriyashiine.houraielixir.common.mixin;
+package moriyashiine.houraielixir.mixin;
 
 import com.mojang.authlib.GameProfile;
 import moriyashiine.houraielixir.api.accessor.HouraiAccessor;
@@ -143,16 +143,17 @@ public abstract class HouraiHandler extends Entity implements HouraiAccessor {
 	}
 	
 	@Mixin(ServerPlayerEntity.class)
-	private static abstract class Server extends PlayerEntity implements HouraiAccessor {
+	private static abstract class Server extends PlayerEntity {
 		public Server(World world, BlockPos blockPos, GameProfile gameProfile) {
 			super(world, blockPos, gameProfile);
 		}
 		
 		@Inject(method = "copyFrom", at = @At("TAIL"))
 		private void copyFrom(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo callbackInfo) {
-			HouraiAccessor oldHourai = ((HouraiAccessor) oldPlayer);
-			setImmortal(oldHourai.getImmortal());
-			setWeaknessTimer(oldHourai.getWeaknessTimer());
+			HouraiAccessor.get(this).ifPresent(houraiAccessor -> HouraiAccessor.get(oldPlayer).ifPresent(oldHouraiAccessor -> {
+				houraiAccessor.setImmortal(oldHouraiAccessor.getImmortal());
+				houraiAccessor.setWeaknessTimer(oldHouraiAccessor.getWeaknessTimer());
+			}));
 		}
 	}
 }
