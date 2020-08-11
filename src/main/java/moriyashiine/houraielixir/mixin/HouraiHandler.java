@@ -144,8 +144,8 @@ public abstract class HouraiHandler extends Entity implements HouraiAccessor {
 	
 	@Mixin(ServerPlayerEntity.class)
 	private static abstract class Server extends PlayerEntity {
-		public Server(World world, BlockPos blockPos, GameProfile gameProfile) {
-			super(world, blockPos, gameProfile);
+		public Server(World world, BlockPos pos, float yaw, GameProfile profile) {
+			super(world, pos, yaw, profile);
 		}
 		
 		@Inject(method = "copyFrom", at = @At("TAIL"))
