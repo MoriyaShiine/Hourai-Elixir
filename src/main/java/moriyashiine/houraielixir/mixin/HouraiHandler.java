@@ -69,6 +69,9 @@ public abstract class HouraiHandler extends Entity implements HouraiAccessor {
 	@Shadow
 	public abstract boolean addStatusEffect(StatusEffectInstance effect);
 	
+	@Shadow
+	protected double serverX;
+	
 	@Inject(method = "tick", at = @At("HEAD"))
 	private void tick(CallbackInfo callbackInfo) {
 		if (!world.isClient) {
@@ -106,8 +109,8 @@ public abstract class HouraiHandler extends Entity implements HouraiAccessor {
 		if (!world.isClient) {
 			if (getImmortal() && getHealth() - amount <= 0) {
 				world.playSound(null, getBlockPos(), SoundEvents.BLOCK_CHORUS_FLOWER_GROW, SoundCategory.PLAYERS, 1, 1);
+				damage(DamageSource.OUT_OF_WORLD, 1 / 128f);
 				setHealth(getMaxHealth());
-				damage(DamageSource.OUT_OF_WORLD, 0.05f);
 				setWeaknessTimer(Math.min(getWeaknessTimer() + 400, 1600));
 				Object obj = this;
 				//noinspection ConstantConditions
@@ -116,6 +119,9 @@ public abstract class HouraiHandler extends Entity implements HouraiAccessor {
 					ServerWorld serverWorld = world.getServer().getWorld(player.getSpawnPointDimension());
 					if (serverWorld != null) {
 						BlockPos spawnPos = player.getSpawnPointPosition();
+						if (spawnPos == null) {
+							spawnPos = serverWorld.getSpawnPos();
+						}
 						player.teleport(serverWorld, spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), player.yaw, player.pitch);
 					}
 				}
