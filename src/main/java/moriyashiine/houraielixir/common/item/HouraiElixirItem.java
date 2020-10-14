@@ -48,7 +48,7 @@ public class HouraiElixirItem extends Item {
 	
 	@Override
 	public int getMaxUseTime(ItemStack stack) {
-		return Items.POTION.getMaxUseTime(stack);
+		return 16;
 	}
 	
 	@Override
