@@ -37,7 +37,7 @@ public class HouraiElixirItem extends Item {
 	
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-		HouraiAccessor.get(user).ifPresent(houraiAccessor -> {
+		HouraiAccessor.of(user).ifPresent(houraiAccessor -> {
 			if (!user.world.isClient && user instanceof PlayerEntity) {
 				((PlayerEntity) user).sendMessage(new TranslatableText("message." + HouraiElixir.MODID + (houraiAccessor.getImmortal() ? ".already_immortal" : ".become_immortal")), true);
 			}

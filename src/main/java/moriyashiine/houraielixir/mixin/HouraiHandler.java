@@ -156,7 +156,7 @@ public abstract class HouraiHandler extends Entity implements HouraiAccessor {
 		
 		@Inject(method = "copyFrom", at = @At("TAIL"))
 		private void copyFrom(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo callbackInfo) {
-			HouraiAccessor.get(this).ifPresent(houraiAccessor -> HouraiAccessor.get(oldPlayer).ifPresent(oldHouraiAccessor -> {
+			HouraiAccessor.of(this).ifPresent(houraiAccessor -> HouraiAccessor.of(oldPlayer).ifPresent(oldHouraiAccessor -> {
 				houraiAccessor.setImmortal(oldHouraiAccessor.getImmortal());
 				houraiAccessor.setWeaknessTimer(oldHouraiAccessor.getWeaknessTimer());
 			}));
