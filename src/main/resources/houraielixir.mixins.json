@@ -4,8 +4,8 @@
   "package": "moriyashiine.houraielixir.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-	"HouraiHandler",
-	"HouraiHandler$Server"
+	"LivingEntityMixin",
+	"ServerPlayerEntityMixin"
   ],
   "injectors": {
 	"defaultRequire": 1
