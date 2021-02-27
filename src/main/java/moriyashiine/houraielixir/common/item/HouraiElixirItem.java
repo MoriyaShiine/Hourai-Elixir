@@ -37,12 +37,12 @@ public class HouraiElixirItem extends Item {
 	
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-		HouraiAccessor.of(user).ifPresent(houraiAccessor -> {
-			if (!user.world.isClient && user instanceof PlayerEntity) {
-				((PlayerEntity) user).sendMessage(new TranslatableText("message." + HouraiElixir.MODID + (houraiAccessor.getImmortal() ? ".already_immortal" : ".become_immortal")), true);
+		if (user instanceof PlayerEntity) {
+			if (!user.world.isClient) {
+				((PlayerEntity) user).sendMessage(new TranslatableText(HouraiElixir.MODID + ".message." + (((HouraiAccessor) user).getImmortal() ? "already_immortal" : "become_immortal")), true);
 			}
-			houraiAccessor.setImmortal(true);
-		});
+			((HouraiAccessor) user).setImmortal(true);
+		}
 		return Items.POTION.finishUsing(stack, world, user);
 	}
 	
@@ -54,6 +54,6 @@ public class HouraiElixirItem extends Item {
 	@Override
 	@Environment(EnvType.CLIENT)
 	public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
-		tooltip.add(new TranslatableText("tooltip." + HouraiElixir.MODID + ".hourai_elixir").formatted(Formatting.GRAY));
+		tooltip.add(new TranslatableText(HouraiElixir.MODID + ".tooltip.hourai_elixir").formatted(Formatting.GRAY));
 	}
 }

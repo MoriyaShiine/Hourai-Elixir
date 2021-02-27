@@ -1,6 +1,6 @@
 {
   "item.houraielixir.hourai_elixir": "Elixir Hourai",
-  "tooltip.houraielixir.hourai_elixir": "Garante imortalidade quando comsumido",
-  "message.houraielixir.become_immortal": "Depois de beber a mistura lendária, você virou um imortal irreversível.",
-  "message.houraielixir.already_immortal": "Beber a mistura novamente não teve efeito, ao passo que você já é imortal."
+  "houraielixir.tooltip.hourai_elixir": "Garante imortalidade quando comsumido",
+  "houraielixir.message.become_immortal": "Depois de beber a mistura lendária, você virou um imortal irreversível.",
+  "houraielixir.message.already_immortal": "Beber a mistura novamente não teve efeito, ao passo que você já é imortal."
 }

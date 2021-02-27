@@ -19,9 +19,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
 	
 	@Inject(method = "copyFrom", at = @At("TAIL"))
 	private void copyFrom(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo callbackInfo) {
-		HouraiAccessor.of(this).ifPresent(houraiAccessor -> HouraiAccessor.of(oldPlayer).ifPresent(oldHouraiAccessor -> {
-			houraiAccessor.setImmortal(oldHouraiAccessor.getImmortal());
-			houraiAccessor.setWeaknessTimer(oldHouraiAccessor.getWeaknessTimer());
-		}));
+		((HouraiAccessor) this).setImmortal(((HouraiAccessor) oldPlayer).getImmortal());
+		((HouraiAccessor) this).setWeaknessTimer(((HouraiAccessor) oldPlayer).getWeaknessTimer());
 	}
 }

@@ -5,7 +5,9 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
 	"LivingEntityMixin",
-	"ServerPlayerEntityMixin"
+	"PlayerEntityMixin",
+	"ServerPlayerEntityMixin",
+	"StatusEffectAccessor"
   ],
   "injectors": {
 	"defaultRequire": 1
