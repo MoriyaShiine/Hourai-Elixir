@@ -26,9 +26,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @SuppressWarnings("ConstantConditions")
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity implements HouraiAccessor {
-	private static final TrackedData<Boolean> IMMORTAL = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-	
-	private static final TrackedData<Integer> WEAKNESS_TIMER = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
+	private boolean immortal = false;
+	private int weaknessTimer = 0;
 	
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
@@ -36,22 +35,22 @@ public abstract class PlayerEntityMixin extends LivingEntity implements HouraiAc
 	
 	@Override
 	public boolean getImmortal() {
-		return dataTracker.get(IMMORTAL);
+		return immortal;
 	}
 	
 	@Override
 	public void setImmortal(boolean immortal) {
-		dataTracker.set(IMMORTAL, immortal);
+		this.immortal = immortal;
 	}
 	
 	@Override
 	public int getWeaknessTimer() {
-		return dataTracker.get(WEAKNESS_TIMER);
+		return weaknessTimer;
 	}
 	
 	@Override
 	public void setWeaknessTimer(int weaknessTimer) {
-		dataTracker.set(WEAKNESS_TIMER, weaknessTimer);
+		this.weaknessTimer = weaknessTimer;
 	}
 	
 	@Inject(method = "tick", at = @At("TAIL"))
@@ -111,11 +110,5 @@ public abstract class PlayerEntityMixin extends LivingEntity implements HouraiAc
 	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
 		tag.putBoolean("Immortal", getImmortal());
 		tag.putInt("WeaknessTimer", getWeaknessTimer());
-	}
-	
-	@Inject(method = "initDataTracker", at = @At("TAIL"))
-	private void initDataTracker(CallbackInfo callbackInfo) {
-		dataTracker.startTracking(IMMORTAL, false);
-		dataTracker.startTracking(WEAKNESS_TIMER, 0);
 	}
 }
