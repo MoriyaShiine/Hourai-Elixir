@@ -10,11 +10,29 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
+repositories {
+    maven {
+        name "requiem"
+        url "https://dl.bintray.com/ladysnake/mods"
+    }
+    maven {
+        name "player ability lib, impersonate"
+        url "https://dl.bintray.com/ladysnake/libs"
+    }
+    maven {
+        name "jitpack"
+        url "https://jitpack.io"
+    }
+}
+
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    modImplementation "io.github.ladysnake:requiem-api:${requiem_version}"
+    modRuntime "io.github.ladysnake:requiem:${requiem_version}"
 }
 
 processResources {
