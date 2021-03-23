@@ -73,7 +73,6 @@ public class HouraiElixir implements ModInitializer {
 	public static float handleDamage(LivingEntity entity, DamageSource source, float amount) {
 		if (!entity.world.isClient && isImmortal(entity) && entity.getHealth() - amount <= 0) {
 			entity.world.playSound(null, entity.getBlockPos(), ENTITY_GENERIC_RESURRECT, entity.getSoundCategory(), 1, 1);
-			entity.setHealth(entity.getMaxHealth());
 			LivingEntity actualEntity = entity;
 			boolean outOfWorld = entity.getY() <= -64 && source == DamageSource.OUT_OF_WORLD;
 			if (entity instanceof ServerPlayerEntity) {
@@ -101,6 +100,7 @@ public class HouraiElixir implements ModInitializer {
 				entity.setWorld(overworld);
 				entity.teleport(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
 			}
+			actualEntity.setHealth(actualEntity.getMaxHealth());
 			((HouraiAccessor) actualEntity).setWeaknessTimer(Math.min(((HouraiAccessor) actualEntity).getWeaknessTimer() + 400, 1600));
 			return 0;
 		}
