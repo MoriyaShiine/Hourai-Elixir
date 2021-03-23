@@ -1,5 +1,6 @@
 {
   "item.houraielixir.hourai_elixir": "Hourai Elixir",
+  "houraielixir.subtitles.entity.generic.resurrect": "Entity resurrects",
   "houraielixir.tooltip.hourai_elixir": "Grants immortality when consumed",
   "houraielixir.message.become_immortal": "After drinking from the legendary mixture, you have become irreversibly immortal.",
   "houraielixir.message.already_immortal": "Drinking the concoction did nothing, as you are already immortal."

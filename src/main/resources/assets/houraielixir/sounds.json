@@ -1,0 +1,11 @@
+{
+  "entity.generic.resurrect": {
+	"sounds": [
+	  "block/chorus_flower/grow1",
+	  "block/chorus_flower/grow2",
+	  "block/chorus_flower/grow3",
+	  "block/chorus_flower/grow4"
+	],
+	"subtitle": "houraielixir.subtitles.entity.generic.resurrect"
+  }
+}
