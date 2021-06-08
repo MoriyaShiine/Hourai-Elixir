@@ -17,7 +17,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 	}
 	
 	@ModifyVariable(method = "applyDamage", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, ordinal = 0, target = "Lnet/minecraft/entity/player/PlayerEntity;getHealth()F"))
-	private float damage(float amount, DamageSource source) {
+	private float modifyApplyDamage(float amount, DamageSource source) {
 		return HouraiElixir.handleDamage(this, source, amount);
 	}
 }

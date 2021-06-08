@@ -2,9 +2,8 @@ package moriyashiine.houraielixir.common.world;
 
 import moriyashiine.houraielixir.common.HouraiElixir;
 import net.fabricmc.fabric.api.util.NbtType;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.world.PersistentState;
 import net.minecraft.world.World;
 
@@ -15,31 +14,29 @@ import java.util.UUID;
 public class HEUniversalWorldState extends PersistentState {
 	public final List<UUID> immortalEntities = new ArrayList<>();
 	
-	public HEUniversalWorldState(String key) {
-		super(key);
-	}
-	
-	@Override
-	public void fromTag(CompoundTag tag) {
-		ListTag immortalEntities = tag.getList("ImmortalEntities", NbtType.COMPOUND);
+	public static HEUniversalWorldState readNbt(NbtCompound tag) {
+		HEUniversalWorldState worldState = new HEUniversalWorldState();
+		NbtList immortalEntities = tag.getList("ImmortalEntities", NbtType.COMPOUND);
 		for (int i = 0; i < immortalEntities.size(); i++) {
-			this.immortalEntities.add(immortalEntities.getCompound(i).getUuid("UUID"));
+			worldState.immortalEntities.add(immortalEntities.getCompound(i).getUuid("UUID"));
 		}
+		return worldState;
 	}
 	
 	@Override
-	public CompoundTag toTag(CompoundTag tag) {
-		ListTag immortalEntities = new ListTag();
+	public NbtCompound writeNbt(NbtCompound nbt) {
+		NbtList immortalEntities = new NbtList();
 		for (UUID uuid : this.immortalEntities) {
-			CompoundTag compound = new CompoundTag();
+			NbtCompound compound = new NbtCompound();
 			compound.putUuid("UUID", uuid);
 			immortalEntities.add(compound);
 		}
-		tag.put("ImmortalEntities", immortalEntities);
-		return tag;
+		nbt.put("ImmortalEntities", immortalEntities);
+		return nbt;
 	}
 	
+	@SuppressWarnings("ConstantConditions")
 	public static HEUniversalWorldState get(World world) {
-		return ((ServerWorld) world).getServer().getOverworld().getPersistentStateManager().getOrCreate(() -> new HEUniversalWorldState(HouraiElixir.MODID + "_universal"), HouraiElixir.MODID + "_universal");
+		return world.getServer().getOverworld().getPersistentStateManager().getOrCreate(HEUniversalWorldState::readNbt, HEUniversalWorldState::new, HouraiElixir.MODID + "_universal");
 	}
 }

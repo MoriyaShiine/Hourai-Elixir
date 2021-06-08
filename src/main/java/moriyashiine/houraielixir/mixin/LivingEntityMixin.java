@@ -9,7 +9,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -66,25 +66,25 @@ public abstract class LivingEntityMixin extends Entity implements HouraiAccessor
 		}
 	}
 	
-	@ModifyVariable(method = "applyDamage", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, ordinal = 0, target = "Lnet/minecraft/entity/LivingEntity;getHealth()F"))
-	private float damage(float amount, DamageSource source) {
+	@ModifyVariable(method = "applyDamage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getHealth()F"))
+	private float modifyApplyDamage(float amount, DamageSource source) {
 		return HouraiElixir.handleDamage((LivingEntity) (Object) this, source, amount);
 	}
 	
 	@Inject(method = "canHaveStatusEffect", at = @At("HEAD"), cancellable = true)
 	private void canHaveStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (HouraiElixir.isImmortal((LivingEntity) (Object) this) && getWeaknessTimer() == 0 && ((StatusEffectAccessor) effect.getEffectType()).he_getType() != StatusEffectType.BENEFICIAL) {
+		if (!world.isClient && HouraiElixir.isImmortal((LivingEntity) (Object) this) && getWeaknessTimer() == 0 && ((StatusEffectAccessor) effect.getEffectType()).he_getType() != StatusEffectType.BENEFICIAL) {
 			callbackInfo.setReturnValue(false);
 		}
 	}
 	
-	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
-	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		setWeaknessTimer(tag.getInt("WeaknessTimer"));
+	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
+	private void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
+		setWeaknessTimer(nbt.getInt("WeaknessTimer"));
 	}
 	
-	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
-	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo callbackInfo) {
-		tag.putInt("WeaknessTimer", getWeaknessTimer());
+	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
+	private void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
+		nbt.putInt("WeaknessTimer", getWeaknessTimer());
 	}
 }

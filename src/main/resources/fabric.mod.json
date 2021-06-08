@@ -24,8 +24,8 @@
 	"houraielixir.mixins.json"
   ],
   "depends": {
-	"fabricloader": ">=0.11.0",
+	"fabricloader": "*",
 	"fabric": "*",
-	"minecraft": "1.16.5"
+	"minecraft": "1.17.*"
   }
 }
