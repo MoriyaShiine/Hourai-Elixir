@@ -73,7 +73,7 @@ public abstract class LivingEntityMixin extends Entity implements HouraiAccessor
 	
 	@Inject(method = "canHaveStatusEffect", at = @At("HEAD"), cancellable = true)
 	private void canHaveStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!world.isClient && HouraiElixir.isImmortal((LivingEntity) (Object) this) && getWeaknessTimer() == 0 && ((StatusEffectAccessor) effect.getEffectType()).he_getType() != StatusEffectType.BENEFICIAL) {
+		if (!world.isClient && HouraiElixir.isImmortal((LivingEntity) (Object) this) && getWeaknessTimer() == 0 && effect.getEffectType().getType() != StatusEffectType.BENEFICIAL) {
 			callbackInfo.setReturnValue(false);
 		}
 	}

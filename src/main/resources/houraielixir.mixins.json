@@ -5,8 +5,7 @@
   "compatibilityLevel": "JAVA_16",
   "mixins": [
 	"LivingEntityMixin",
-	"PlayerEntityMixin",
-	"StatusEffectAccessor"
+	"PlayerEntityMixin"
   ],
   "injectors": {
 	"defaultRequire": 1
