@@ -18,6 +18,14 @@
   "entrypoints": {
 	"main": [
 	  "moriyashiine.houraielixir.common.HouraiElixir"
+	],
+	"cardinal-components-entity": [
+	  "moriyashiine.houraielixir.common.registry.HEComponents"
+	]
+  },
+  "custom": {
+	"cardinal-components": [
+	  "houraielixir:hourai"
 	]
   },
   "mixins": [

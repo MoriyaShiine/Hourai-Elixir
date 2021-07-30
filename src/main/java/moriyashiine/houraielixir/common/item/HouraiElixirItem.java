@@ -38,8 +38,8 @@ public class HouraiElixirItem extends Item {
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (!world.isClient) {
-			if (user instanceof PlayerEntity) {
-				((PlayerEntity) user).sendMessage(new TranslatableText(HouraiElixir.MODID + ".message." + (HouraiElixir.isImmortal(user) ? "already_immortal" : "become_immortal")), true);
+			if (user instanceof PlayerEntity player) {
+				player.sendMessage(new TranslatableText(HouraiElixir.MODID + ".message." + (HouraiElixir.isImmortal(user) ? "already_immortal" : "become_immortal")), true);
 			}
 			HEUniversalWorldState worldState = HEUniversalWorldState.get(world);
 			if (!worldState.immortalEntities.contains(user.getUuid())) {

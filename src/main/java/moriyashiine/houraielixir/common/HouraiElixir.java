@@ -1,11 +1,10 @@
 package moriyashiine.houraielixir.common;
 
-import moriyashiine.houraielixir.api.accessor.HouraiAccessor;
+import moriyashiine.houraielixir.api.component.HouraiComponent;
 import moriyashiine.houraielixir.common.item.HouraiElixirItem;
 import moriyashiine.houraielixir.common.world.HEUniversalWorldState;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.dimension.v1.FabricDimensions;
-import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.Item;
@@ -30,7 +29,6 @@ public class HouraiElixir implements ModInitializer {
 	public void onInitialize() {
 		Registry.register(Registry.ITEM, new Identifier(MODID, "hourai_elixir"), new HouraiElixirItem(new Item.Settings().group(ItemGroup.MISC).rarity(Rarity.EPIC).maxCount(1)));
 		Registry.register(Registry.SOUND_EVENT, new Identifier(MODID, "entity.generic.resurrect"), ENTITY_GENERIC_RESURRECT);
-		ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) -> ((HouraiAccessor) newPlayer).setWeaknessTimer(((HouraiAccessor) oldPlayer).getWeaknessTimer()));
 	}
 	
 	public static boolean isImmortal(LivingEntity entity) {
@@ -54,7 +52,7 @@ public class HouraiElixir implements ModInitializer {
 				FabricDimensions.teleport(entity, world, new TeleportTarget(Vec3d.of(worldSpawnPos), Vec3d.ZERO, entity.headYaw, entity.getPitch()));
 			}
 			entity.setHealth(entity.getMaxHealth());
-			((HouraiAccessor) entity).setWeaknessTimer(Math.min(((HouraiAccessor) entity).getWeaknessTimer() + 400, 1600));
+			HouraiComponent.maybeGet(entity).ifPresent(houraiComponent -> houraiComponent.setWeaknessTimer(Math.min(houraiComponent.getWeaknessTimer() + 400, 1600)));
 			return 0;
 		}
 		return amount;
