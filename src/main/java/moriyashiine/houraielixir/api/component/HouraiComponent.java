@@ -11,11 +11,11 @@ import net.minecraft.nbt.NbtCompound;
 import java.util.Optional;
 
 public class HouraiComponent implements ComponentV3, ServerTickingComponent {
-	private final LivingEntity entity;
+	private final LivingEntity obj;
 	private int weaknessTimer = 0;
 	
-	public HouraiComponent(LivingEntity entity) {
-		this.entity = entity;
+	public HouraiComponent(LivingEntity obj) {
+		this.obj = obj;
 	}
 	
 	public int getWeaknessTimer() {
@@ -41,29 +41,29 @@ public class HouraiComponent implements ComponentV3, ServerTickingComponent {
 		int weaknessTimer = getWeaknessTimer();
 		if (weaknessTimer > 0) {
 			setWeaknessTimer(--weaknessTimer);
-			entity.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 10, 0, true, false));
+			obj.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 10, 0, true, false));
 			if (weaknessTimer >= 400) {
-				entity.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 10, 1, true, false));
-				entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 10, 0, true, false));
+				obj.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 10, 1, true, false));
+				obj.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 10, 0, true, false));
 				if (weaknessTimer >= 800) {
-					entity.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 10, 1, true, false));
-					entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 10, 1, true, false));
-					entity.addStatusEffect(new StatusEffectInstance(StatusEffects.MINING_FATIGUE, 10, 0, true, false));
+					obj.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 10, 1, true, false));
+					obj.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 10, 1, true, false));
+					obj.addStatusEffect(new StatusEffectInstance(StatusEffects.MINING_FATIGUE, 10, 0, true, false));
 					if (weaknessTimer >= 1200) {
-						entity.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 10, 2, true, false));
-						entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 10, 2, true, false));
-						entity.addStatusEffect(new StatusEffectInstance(StatusEffects.MINING_FATIGUE, 10, 1, true, false));
+						obj.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 10, 2, true, false));
+						obj.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 10, 2, true, false));
+						obj.addStatusEffect(new StatusEffectInstance(StatusEffects.MINING_FATIGUE, 10, 1, true, false));
 					}
 				}
 			}
 		}
 	}
 	
-	public static HouraiComponent get(LivingEntity entity) {
-		return HEComponents.HOURAI_COMPONENT.get(entity);
+	public static HouraiComponent get(LivingEntity obj) {
+		return HEComponents.HOURAI_COMPONENT.get(obj);
 	}
 	
-	public static Optional<HouraiComponent> maybeGet(LivingEntity entity) {
-		return HEComponents.HOURAI_COMPONENT.maybeGet(entity);
+	public static Optional<HouraiComponent> maybeGet(LivingEntity obj) {
+		return HEComponents.HOURAI_COMPONENT.maybeGet(obj);
 	}
 }
