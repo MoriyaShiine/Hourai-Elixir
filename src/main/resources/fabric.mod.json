@@ -23,11 +23,6 @@
 	  "moriyashiine.houraielixir.common.registry.HEComponents"
 	]
   },
-  "custom": {
-	"cardinal-components": [
-	  "houraielixir:hourai"
-	]
-  },
   "mixins": [
 	"houraielixir.mixins.json"
   ],
@@ -35,5 +30,10 @@
 	"fabricloader": "*",
 	"fabric": "*",
 	"minecraft": "1.17.*"
+  },
+  "custom": {
+	"cardinal-components": [
+	  "houraielixir:hourai"
+	]
   }
 }
