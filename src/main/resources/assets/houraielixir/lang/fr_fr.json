@@ -1,0 +1,7 @@
+{
+  "item.houraielixir.hourai_elixir": "Élixir Hourai",
+  "houraielixir.subtitles.entity.generic.resurrect": "L'entité ressucite",
+  "houraielixir.tooltip.hourai_elixir": "Offre l'immortalité une fois bu",
+  "houraielixir.message.become_immortal": "Après avoir bu la concoction légendaire, vous êtes désormais irréversablement immortel.",
+  "houraielixir.message.already_immortal": "Boire la concoction n'a eu aucun effet puisque vous êtes déjà immortel."
+}
