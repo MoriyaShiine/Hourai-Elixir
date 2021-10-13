@@ -3,7 +3,7 @@
   "id": "houraielixir",
   "version": "${version}",
   "name": "Hourai Elixir",
-  "description": "An (unobtainable) overpowered item that grants immortality",
+  "description": "Adds an (unobtainable) overpowered item that grants immortality",
   "authors": [
 	"MoriyaShiine",
 	"cybercat5555"
@@ -20,7 +20,7 @@
 	  "moriyashiine.houraielixir.common.HouraiElixir"
 	],
 	"cardinal-components-entity": [
-	  "moriyashiine.houraielixir.common.registry.HEComponents"
+	  "moriyashiine.houraielixir.common.registry.ModComponents"
 	]
   },
   "mixins": [
@@ -29,7 +29,8 @@
   "depends": {
 	"fabricloader": "*",
 	"fabric": "*",
-	"minecraft": "1.17.*"
+	"minecraft": "1.17.x",
+	"java": ">=16"
   },
   "custom": {
 	"cardinal-components": [

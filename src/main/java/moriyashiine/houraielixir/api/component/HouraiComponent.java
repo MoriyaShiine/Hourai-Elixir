@@ -2,7 +2,7 @@ package moriyashiine.houraielixir.api.component;
 
 import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
-import moriyashiine.houraielixir.common.registry.HEComponents;
+import moriyashiine.houraielixir.common.registry.ModComponents;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -60,10 +60,10 @@ public class HouraiComponent implements ComponentV3, ServerTickingComponent {
 	}
 	
 	public static HouraiComponent get(LivingEntity obj) {
-		return HEComponents.HOURAI_COMPONENT.get(obj);
+		return ModComponents.HOURAI_COMPONENT.get(obj);
 	}
 	
 	public static Optional<HouraiComponent> maybeGet(LivingEntity obj) {
-		return HEComponents.HOURAI_COMPONENT.maybeGet(obj);
+		return ModComponents.HOURAI_COMPONENT.maybeGet(obj);
 	}
 }

@@ -9,8 +9,8 @@ import moriyashiine.houraielixir.api.component.HouraiComponent;
 import moriyashiine.houraielixir.common.HouraiElixir;
 import net.minecraft.util.Identifier;
 
-public class HEComponents implements EntityComponentInitializer {
-	public static final ComponentKey<HouraiComponent> HOURAI_COMPONENT = ComponentRegistryV3.INSTANCE.getOrCreate(new Identifier(HouraiElixir.MODID, "hourai"), HouraiComponent.class);
+public class ModComponents implements EntityComponentInitializer {
+	public static final ComponentKey<HouraiComponent> HOURAI_COMPONENT = ComponentRegistryV3.INSTANCE.getOrCreate(new Identifier(HouraiElixir.MOD_ID, "hourai"), HouraiComponent.class);
 	
 	@Override
 	public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {

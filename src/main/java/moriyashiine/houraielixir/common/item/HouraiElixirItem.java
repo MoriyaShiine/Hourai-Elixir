@@ -1,7 +1,8 @@
 package moriyashiine.houraielixir.common.item;
 
+import moriyashiine.houraielixir.api.HouraiElixirAPI;
 import moriyashiine.houraielixir.common.HouraiElixir;
-import moriyashiine.houraielixir.common.world.HEUniversalWorldState;
+import moriyashiine.houraielixir.common.world.ModUniversalWorldState;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;
@@ -39,9 +40,9 @@ public class HouraiElixirItem extends Item {
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (!world.isClient) {
 			if (user instanceof PlayerEntity player) {
-				player.sendMessage(new TranslatableText(HouraiElixir.MODID + ".message." + (HouraiElixir.isImmortal(user) ? "already_immortal" : "become_immortal")), true);
+				player.sendMessage(new TranslatableText(HouraiElixir.MOD_ID + ".message." + (HouraiElixirAPI.isImmortal(user) ? "already_immortal" : "become_immortal")), true);
 			}
-			HEUniversalWorldState worldState = HEUniversalWorldState.get(world);
+			ModUniversalWorldState worldState = ModUniversalWorldState.get(world);
 			if (!worldState.immortalEntities.contains(user.getUuid())) {
 				worldState.immortalEntities.add(user.getUuid());
 				worldState.markDirty();
@@ -58,6 +59,6 @@ public class HouraiElixirItem extends Item {
 	@Override
 	@Environment(EnvType.CLIENT)
 	public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
-		tooltip.add(new TranslatableText(HouraiElixir.MODID + ".tooltip.hourai_elixir").formatted(Formatting.GRAY));
+		tooltip.add(new TranslatableText(HouraiElixir.MOD_ID + ".tooltip.hourai_elixir").formatted(Formatting.GRAY));
 	}
 }

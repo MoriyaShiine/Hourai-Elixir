@@ -1,13 +1,14 @@
 package moriyashiine.houraielixir.mixin;
 
+import moriyashiine.houraielixir.api.HouraiElixirAPI;
 import moriyashiine.houraielixir.api.component.HouraiComponent;
 import moriyashiine.houraielixir.common.HouraiElixir;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -29,7 +30,7 @@ public abstract class LivingEntityMixin extends Entity {
 	
 	@Inject(method = "canHaveStatusEffect", at = @At("HEAD"), cancellable = true)
 	private void canHaveStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!world.isClient && HouraiElixir.isImmortal((LivingEntity) (Object) this) && HouraiComponent.get((LivingEntity) (Object) this).getWeaknessTimer() == 0 && effect.getEffectType().getType() != StatusEffectType.BENEFICIAL) {
+		if (!world.isClient && HouraiElixirAPI.isImmortal((LivingEntity) (Object) this) && HouraiComponent.get((LivingEntity) (Object) this).getWeaknessTimer() == 0 && effect.getEffectType().getCategory() != StatusEffectCategory.BENEFICIAL) {
 			callbackInfo.setReturnValue(false);
 		}
 	}
