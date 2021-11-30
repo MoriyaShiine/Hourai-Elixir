@@ -1,29 +1,18 @@
-package moriyashiine.houraielixir.api.component;
+package moriyashiine.houraielixir.common.component.entity;
 
-import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
-import moriyashiine.houraielixir.common.registry.ModComponents;
+import moriyashiine.houraielixir.common.world.ModUniversalWorldState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.nbt.NbtCompound;
 
-import java.util.Optional;
-
-public class HouraiComponent implements ComponentV3, ServerTickingComponent {
+public class HouraiComponent implements ServerTickingComponent {
 	private final LivingEntity obj;
 	private int weaknessTimer = 0;
 	
 	public HouraiComponent(LivingEntity obj) {
 		this.obj = obj;
-	}
-	
-	public int getWeaknessTimer() {
-		return weaknessTimer;
-	}
-	
-	public void setWeaknessTimer(int weaknessTimer) {
-		this.weaknessTimer = weaknessTimer;
 	}
 	
 	@Override
@@ -59,11 +48,15 @@ public class HouraiComponent implements ComponentV3, ServerTickingComponent {
 		}
 	}
 	
-	public static HouraiComponent get(LivingEntity obj) {
-		return ModComponents.HOURAI_COMPONENT.get(obj);
+	public int getWeaknessTimer() {
+		return weaknessTimer;
 	}
 	
-	public static Optional<HouraiComponent> maybeGet(LivingEntity obj) {
-		return ModComponents.HOURAI_COMPONENT.maybeGet(obj);
+	public void setWeaknessTimer(int weaknessTimer) {
+		this.weaknessTimer = weaknessTimer;
+	}
+	
+	public static boolean isImmortal(LivingEntity entity) {
+		return ModUniversalWorldState.get(entity.world).immortalEntities.contains(entity.getUuid());
 	}
 }

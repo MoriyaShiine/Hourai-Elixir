@@ -1,8 +1,8 @@
 package moriyashiine.houraielixir.mixin;
 
-import moriyashiine.houraielixir.api.HouraiElixirAPI;
-import moriyashiine.houraielixir.api.component.HouraiComponent;
 import moriyashiine.houraielixir.common.HouraiElixir;
+import moriyashiine.houraielixir.common.component.entity.HouraiComponent;
+import moriyashiine.houraielixir.common.registry.ModComponents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -16,7 +16,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@SuppressWarnings("ConstantConditions")
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
 	public LivingEntityMixin(EntityType<?> type, World world) {
@@ -24,14 +23,14 @@ public abstract class LivingEntityMixin extends Entity {
 	}
 	
 	@ModifyVariable(method = "applyDamage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getHealth()F"))
-	private float modifyApplyDamage(float amount, DamageSource source) {
+	private float houraiDamage(float amount, DamageSource source) {
 		return HouraiElixir.handleDamage((LivingEntity) (Object) this, source, amount);
 	}
 	
 	@Inject(method = "canHaveStatusEffect", at = @At("HEAD"), cancellable = true)
-	private void canHaveStatusEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (!world.isClient && HouraiElixirAPI.isImmortal((LivingEntity) (Object) this) && HouraiComponent.get((LivingEntity) (Object) this).getWeaknessTimer() == 0 && effect.getEffectType().getCategory() != StatusEffectCategory.BENEFICIAL) {
-			callbackInfo.setReturnValue(false);
+	private void houraiStatusImmunity(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> cir) {
+		if (!world.isClient && HouraiComponent.isImmortal((LivingEntity) (Object) this) && ModComponents.HOURAI_COMPONENT.get((LivingEntity) (Object) this).getWeaknessTimer() == 0 && effect.getEffectType().getCategory() != StatusEffectCategory.BENEFICIAL) {
+			cir.setReturnValue(false);
 		}
 	}
 }

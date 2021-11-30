@@ -1,5 +1,5 @@
 {
-  "parent": "item/generated",
+  "parent": "minecraft:item/generated",
   "textures": {
 	"layer0": "houraielixir:item/hourai_elixir"
   }

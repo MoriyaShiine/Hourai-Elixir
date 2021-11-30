@@ -1,7 +1,7 @@
 package moriyashiine.houraielixir.common.item;
 
-import moriyashiine.houraielixir.api.HouraiElixirAPI;
 import moriyashiine.houraielixir.common.HouraiElixir;
+import moriyashiine.houraielixir.common.component.entity.HouraiComponent;
 import moriyashiine.houraielixir.common.world.ModUniversalWorldState;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -10,6 +10,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUsage;
 import net.minecraft.item.Items;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
@@ -28,19 +29,19 @@ public class HouraiElixirItem extends Item {
 	
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-		return Items.POTION.use(world, user, hand);
+		return ItemUsage.consumeHeldItem(world, user, hand);
 	}
 	
 	@Override
 	public UseAction getUseAction(ItemStack stack) {
-		return Items.POTION.getUseAction(stack);
+		return UseAction.DRINK;
 	}
 	
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (!world.isClient) {
 			if (user instanceof PlayerEntity player) {
-				player.sendMessage(new TranslatableText(HouraiElixir.MOD_ID + ".message." + (HouraiElixirAPI.isImmortal(user) ? "already_immortal" : "become_immortal")), true);
+				player.sendMessage(new TranslatableText(HouraiElixir.MOD_ID + ".message." + (HouraiComponent.isImmortal(user) ? "already_immortal" : "become_immortal")), true);
 			}
 			ModUniversalWorldState worldState = ModUniversalWorldState.get(world);
 			if (!worldState.immortalEntities.contains(user.getUuid())) {
@@ -56,8 +57,8 @@ public class HouraiElixirItem extends Item {
 		return 16;
 	}
 	
-	@Override
 	@Environment(EnvType.CLIENT)
+	@Override
 	public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
 		tooltip.add(new TranslatableText(HouraiElixir.MOD_ID + ".tooltip.hourai_elixir").formatted(Formatting.GRAY));
 	}

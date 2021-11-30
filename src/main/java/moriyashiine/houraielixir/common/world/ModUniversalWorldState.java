@@ -4,6 +4,7 @@ import moriyashiine.houraielixir.common.HouraiElixir;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.nbt.NbtString;
 import net.minecraft.world.PersistentState;
 import net.minecraft.world.World;
 
@@ -16,9 +17,9 @@ public class ModUniversalWorldState extends PersistentState {
 	
 	public static ModUniversalWorldState readNbt(NbtCompound tag) {
 		ModUniversalWorldState worldState = new ModUniversalWorldState();
-		NbtList immortalEntities = tag.getList("ImmortalEntities", NbtType.COMPOUND);
+		NbtList immortalEntities = tag.getList("ImmortalEntities", NbtType.STRING);
 		for (int i = 0; i < immortalEntities.size(); i++) {
-			worldState.immortalEntities.add(immortalEntities.getCompound(i).getUuid("UUID"));
+			worldState.immortalEntities.add(UUID.fromString(immortalEntities.getString(i)));
 		}
 		return worldState;
 	}
@@ -27,9 +28,7 @@ public class ModUniversalWorldState extends PersistentState {
 	public NbtCompound writeNbt(NbtCompound nbt) {
 		NbtList immortalEntities = new NbtList();
 		for (UUID uuid : this.immortalEntities) {
-			NbtCompound compound = new NbtCompound();
-			compound.putUuid("UUID", uuid);
-			immortalEntities.add(compound);
+			immortalEntities.add(NbtString.of(uuid.toString()));
 		}
 		nbt.put("ImmortalEntities", immortalEntities);
 		return nbt;
