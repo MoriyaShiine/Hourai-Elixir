@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public class ModUniversalWorldState extends PersistentState {
 	public final List<UUID> immortalEntities = new ArrayList<>();
-	
+
 	public static ModUniversalWorldState readNbt(NbtCompound tag) {
 		ModUniversalWorldState worldState = new ModUniversalWorldState();
 		NbtList immortalEntities = tag.getList("ImmortalEntities", NbtType.STRING);
@@ -23,7 +23,7 @@ public class ModUniversalWorldState extends PersistentState {
 		}
 		return worldState;
 	}
-	
+
 	@Override
 	public NbtCompound writeNbt(NbtCompound nbt) {
 		NbtList immortalEntities = new NbtList();
@@ -33,7 +33,7 @@ public class ModUniversalWorldState extends PersistentState {
 		nbt.put("ImmortalEntities", immortalEntities);
 		return nbt;
 	}
-	
+
 	@SuppressWarnings("ConstantConditions")
 	public static ModUniversalWorldState get(World world) {
 		return world.getServer().getOverworld().getPersistentStateManager().getOrCreate(ModUniversalWorldState::readNbt, ModUniversalWorldState::new, HouraiElixir.MOD_ID + "_universal");

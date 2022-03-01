@@ -14,16 +14,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.TeleportTarget;
 
-@SuppressWarnings("ConstantConditions")
 public class HouraiElixir implements ModInitializer {
 	public static final String MOD_ID = "houraielixir";
-	
+
 	@Override
 	public void onInitialize() {
 		ModItems.init();
 		ModSoundEvents.init();
 	}
-	
+
+	@SuppressWarnings("ConstantConditions")
 	public static float handleDamage(LivingEntity entity, DamageSource source, float amount) {
 		if (!entity.world.isClient && HouraiComponent.isImmortal(entity) && entity.getHealth() - amount <= 0) {
 			entity.world.playSound(null, entity.getBlockPos(), ModSoundEvents.ENTITY_GENERIC_RESURRECT, entity.getSoundCategory(), 1, 1);
@@ -31,7 +31,7 @@ public class HouraiElixir implements ModInitializer {
 				ServerWorld world = entity.world.getServer().getOverworld();
 				BlockPos worldSpawnPos = world.getSpawnPos();
 				if (entity instanceof ServerPlayerEntity player) {
-					world = player.world.getServer().getWorld(player.getSpawnPointDimension());
+					world = entity.world.getServer().getWorld(player.getSpawnPointDimension());
 					worldSpawnPos = player.getSpawnPointPosition() == null ? worldSpawnPos : player.getSpawnPointPosition();
 				}
 				FabricDimensions.teleport(entity, world, new TeleportTarget(Vec3d.of(worldSpawnPos), Vec3d.ZERO, entity.headYaw, entity.getPitch()));

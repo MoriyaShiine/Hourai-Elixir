@@ -15,9 +15,9 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
 	}
-	
-	@ModifyVariable(method = "applyDamage", at = @At(value = "INVOKE", ordinal = 0, target = "Lnet/minecraft/entity/player/PlayerEntity;getHealth()F"), ordinal = 0)
-	private float houraiDamage(float amount, DamageSource source) {
+
+	@ModifyVariable(method = "applyDamage", at = @At(value = "INVOKE", ordinal = 0, target = "Lnet/minecraft/entity/player/PlayerEntity;getHealth()F"), ordinal = 0, argsOnly = true)
+	private float houraielixir$preventDeath(float amount, DamageSource source) {
 		return HouraiElixir.handleDamage(this, source, amount);
 	}
 }

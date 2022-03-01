@@ -10,21 +10,21 @@ import net.minecraft.nbt.NbtCompound;
 public class HouraiComponent implements ServerTickingComponent {
 	private final LivingEntity obj;
 	private int weaknessTimer = 0;
-	
+
 	public HouraiComponent(LivingEntity obj) {
 		this.obj = obj;
 	}
-	
+
 	@Override
 	public void readFromNbt(NbtCompound tag) {
 		setWeaknessTimer(tag.getInt("WeaknessTimer"));
 	}
-	
+
 	@Override
 	public void writeToNbt(NbtCompound tag) {
 		tag.putInt("WeaknessTimer", getWeaknessTimer());
 	}
-	
+
 	@Override
 	public void serverTick() {
 		int weaknessTimer = getWeaknessTimer();
@@ -47,15 +47,15 @@ public class HouraiComponent implements ServerTickingComponent {
 			}
 		}
 	}
-	
+
 	public int getWeaknessTimer() {
 		return weaknessTimer;
 	}
-	
+
 	public void setWeaknessTimer(int weaknessTimer) {
 		this.weaknessTimer = weaknessTimer;
 	}
-	
+
 	public static boolean isImmortal(LivingEntity entity) {
 		return ModUniversalWorldState.get(entity.world).immortalEntities.contains(entity.getUuid());
 	}

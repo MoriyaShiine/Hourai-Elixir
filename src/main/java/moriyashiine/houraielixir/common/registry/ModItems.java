@@ -11,7 +11,7 @@ import net.minecraft.util.registry.Registry;
 
 public class ModItems {
 	public static final Item HOURAI_ELIXIR = new HouraiElixirItem(new FabricItemSettings().group(ItemGroup.MISC).rarity(Rarity.EPIC).maxCount(1));
-	
+
 	public static void init() {
 		Registry.register(Registry.ITEM, new Identifier(HouraiElixir.MOD_ID, "hourai_elixir"), HOURAI_ELIXIR);
 	}

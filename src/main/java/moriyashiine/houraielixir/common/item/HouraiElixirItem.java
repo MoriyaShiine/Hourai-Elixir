@@ -26,17 +26,17 @@ public class HouraiElixirItem extends Item {
 	public HouraiElixirItem(Settings settings) {
 		super(settings);
 	}
-	
+
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 		return ItemUsage.consumeHeldItem(world, user, hand);
 	}
-	
+
 	@Override
 	public UseAction getUseAction(ItemStack stack) {
 		return UseAction.DRINK;
 	}
-	
+
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
 		if (!world.isClient) {
@@ -51,12 +51,12 @@ public class HouraiElixirItem extends Item {
 		}
 		return Items.POTION.finishUsing(stack, world, user);
 	}
-	
+
 	@Override
 	public int getMaxUseTime(ItemStack stack) {
 		return 16;
 	}
-	
+
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {

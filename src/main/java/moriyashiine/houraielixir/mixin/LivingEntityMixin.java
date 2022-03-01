@@ -21,15 +21,15 @@ public abstract class LivingEntityMixin extends Entity {
 	public LivingEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
 	}
-	
-	@ModifyVariable(method = "applyDamage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getHealth()F"), ordinal = 0)
-	private float houraiDamage(float amount, DamageSource source) {
-		return HouraiElixir.handleDamage((LivingEntity) (Object) this, source, amount);
+
+	@ModifyVariable(method = "applyDamage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getHealth()F"), argsOnly = true)
+	private float houraielixir$preventDeath(float amount, DamageSource source) {
+		return HouraiElixir.handleDamage(LivingEntity.class.cast(this), source, amount);
 	}
-	
+
 	@Inject(method = "canHaveStatusEffect", at = @At("HEAD"), cancellable = true)
-	private void houraiStatusImmunity(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> cir) {
-		if (!world.isClient && HouraiComponent.isImmortal((LivingEntity) (Object) this) && ModComponents.HOURAI_COMPONENT.get((LivingEntity) (Object) this).getWeaknessTimer() == 0 && effect.getEffectType().getCategory() != StatusEffectCategory.BENEFICIAL) {
+	private void houraielixir$statusEffectImmunity(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> cir) {
+		if (!world.isClient && HouraiComponent.isImmortal(LivingEntity.class.cast(this)) && ModComponents.HOURAI_COMPONENT.get(LivingEntity.class.cast(this)).getWeaknessTimer() == 0 && effect.getEffectType().getCategory() != StatusEffectCategory.BENEFICIAL) {
 			cir.setReturnValue(false);
 		}
 	}
