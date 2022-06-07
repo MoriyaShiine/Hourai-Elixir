@@ -1,6 +1,10 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.houraielixir.mixin;
 
-import moriyashiine.houraielixir.common.HouraiElixir;
+import moriyashiine.houraielixir.common.util.HouraiElixirUtil;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -18,6 +22,6 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
 	@ModifyVariable(method = "applyDamage", at = @At(value = "INVOKE", ordinal = 0, target = "Lnet/minecraft/entity/player/PlayerEntity;getHealth()F"), ordinal = 0, argsOnly = true)
 	private float houraielixir$preventDeath(float amount, DamageSource source) {
-		return HouraiElixir.handleDamage(this, source, amount);
+		return HouraiElixirUtil.handleDamage(this, source, amount);
 	}
 }

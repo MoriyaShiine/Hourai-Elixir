@@ -21,21 +21,25 @@
 	  "moriyashiine.houraielixir.common.HouraiElixir"
 	],
 	"cardinal-components-entity": [
-	  "moriyashiine.houraielixir.common.registry.ModComponents"
+	  "moriyashiine.houraielixir.common.registry.ModEntityComponents"
+	],
+	"cardinal-components-world": [
+	  "moriyashiine.houraielixir.common.registry.ModWorldComponents"
 	]
   },
   "mixins": [
 	"houraielixir.mixins.json"
   ],
   "depends": {
-	"fabricloader": ">=0.13.3",
-	"minecraft": "~1.18.2",
+	"fabricloader": ">=0.14.6",
+	"minecraft": "1.19.x",
 	"java": ">=17",
-	"fabric": ">=0.47.8"
+	"fabric": ">=0.55.1"
   },
   "custom": {
 	"cardinal-components": [
-	  "houraielixir:hourai"
+	  "houraielixir:hourai",
+	  "houraielixir:immortal_entities"
 	]
   }
 }

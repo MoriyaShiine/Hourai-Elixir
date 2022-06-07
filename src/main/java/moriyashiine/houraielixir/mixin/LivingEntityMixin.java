@@ -1,8 +1,11 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.houraielixir.mixin;
 
-import moriyashiine.houraielixir.common.HouraiElixir;
-import moriyashiine.houraielixir.common.component.entity.HouraiComponent;
-import moriyashiine.houraielixir.common.registry.ModComponents;
+import moriyashiine.houraielixir.common.registry.ModEntityComponents;
+import moriyashiine.houraielixir.common.util.HouraiElixirUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -24,12 +27,12 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@ModifyVariable(method = "applyDamage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getHealth()F"), argsOnly = true)
 	private float houraielixir$preventDeath(float amount, DamageSource source) {
-		return HouraiElixir.handleDamage(LivingEntity.class.cast(this), source, amount);
+		return HouraiElixirUtil.handleDamage(LivingEntity.class.cast(this), source, amount);
 	}
 
 	@Inject(method = "canHaveStatusEffect", at = @At("HEAD"), cancellable = true)
 	private void houraielixir$statusEffectImmunity(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> cir) {
-		if (!world.isClient && HouraiComponent.isImmortal(LivingEntity.class.cast(this)) && ModComponents.HOURAI_COMPONENT.get(LivingEntity.class.cast(this)).getWeaknessTimer() == 0 && effect.getEffectType().getCategory() != StatusEffectCategory.BENEFICIAL) {
+		if (!world.isClient && HouraiElixirUtil.isImmortal(LivingEntity.class.cast(this)) && getComponent(ModEntityComponents.HOURAI).getWeaknessTimer() == 0 && effect.getEffectType().getCategory() != StatusEffectCategory.BENEFICIAL) {
 			cir.setReturnValue(false);
 		}
 	}

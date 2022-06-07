@@ -1,3 +1,7 @@
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
+
 package moriyashiine.houraielixir.common.registry;
 
 import moriyashiine.houraielixir.common.HouraiElixir;
