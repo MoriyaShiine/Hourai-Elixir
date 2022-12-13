@@ -7,16 +7,19 @@ package moriyashiine.houraielixir.common.registry;
 import moriyashiine.houraielixir.common.HouraiElixir;
 import moriyashiine.houraielixir.common.item.HouraiElixirItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.util.Identifier;
+import net.minecraft.item.ItemGroups;
+import net.minecraft.item.Items;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Rarity;
-import net.minecraft.util.registry.Registry;
 
 public class ModItems {
-	public static final Item HOURAI_ELIXIR = new HouraiElixirItem(new FabricItemSettings().group(ItemGroup.MISC).rarity(Rarity.EPIC).maxCount(1));
+	public static final Item HOURAI_ELIXIR = new HouraiElixirItem(new FabricItemSettings().rarity(Rarity.EPIC).maxCount(1));
 
 	public static void init() {
-		Registry.register(Registry.ITEM, new Identifier(HouraiElixir.MOD_ID, "hourai_elixir"), HOURAI_ELIXIR);
+		Registry.register(Registries.ITEM, HouraiElixir.id("hourai_elixir"), HOURAI_ELIXIR);
+		ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> entries.addAfter(Items.HONEY_BOTTLE, HOURAI_ELIXIR));
 	}
 }

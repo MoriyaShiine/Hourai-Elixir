@@ -11,10 +11,9 @@ import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import moriyashiine.houraielixir.common.HouraiElixir;
 import moriyashiine.houraielixir.common.component.entity.HouraiComponent;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.Identifier;
 
 public class ModEntityComponents implements EntityComponentInitializer {
-	public static final ComponentKey<HouraiComponent> HOURAI = ComponentRegistry.getOrCreate(new Identifier(HouraiElixir.MOD_ID, "hourai"), HouraiComponent.class);
+	public static final ComponentKey<HouraiComponent> HOURAI = ComponentRegistry.getOrCreate(HouraiElixir.id("hourai"), HouraiComponent.class);
 
 	@Override
 	public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
