@@ -5,11 +5,10 @@
 package moriyashiine.houraielixir.common.item;
 
 import moriyashiine.houraielixir.common.HouraiElixir;
-import moriyashiine.houraielixir.common.component.world.ImmortalEntitiesComponent;
 import moriyashiine.houraielixir.common.registry.ModWorldComponents;
-import moriyashiine.houraielixir.common.util.HouraiElixirUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,6 +16,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
 import net.minecraft.item.Items;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
@@ -37,22 +38,40 @@ public class HouraiElixirItem extends Item {
 	}
 
 	@Override
-	public UseAction getUseAction(ItemStack stack) {
-		return UseAction.DRINK;
+	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
+		boolean decrement = false;
+		if (user instanceof ServerPlayerEntity player) {
+			decrement = !player.isCreative();
+			Criteria.CONSUME_ITEM.trigger(player, stack);
+			player.incrementStat(Stats.USED.getOrCreateStat(this));
+			player.sendMessage(Text.translatable(HouraiElixir.MOD_ID + ".message." + (HouraiElixir.isImmortal(user) ? "already_immortal" : "become_immortal")), true);
+			ModWorldComponents.IMMORTAL_ENTITIES.maybeGet(world.getServer().getOverworld()).ifPresent(immortalEntitiesComponent -> {
+				if (!immortalEntitiesComponent.getImmortalEntities().contains(user.getUuid())) {
+					immortalEntitiesComponent.getImmortalEntities().add(user.getUuid());
+				}
+			});
+		}
+		if (decrement) {
+			stack.decrement(1);
+		}
+		if (stack.isEmpty()) {
+			return new ItemStack(Items.GLASS_BOTTLE);
+		}
+		if (decrement) {
+			PlayerEntity player = (PlayerEntity) user;
+			if (!player.isCreative()) {
+				ItemStack glassBottle = new ItemStack(Items.GLASS_BOTTLE);
+				if (!player.getInventory().insertStack(glassBottle)) {
+					player.dropItem(glassBottle, false);
+				}
+			}
+		}
+		return stack;
 	}
 
 	@Override
-	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-		if (!world.isClient) {
-			if (user instanceof PlayerEntity player) {
-				player.sendMessage(Text.translatable(HouraiElixir.MOD_ID + ".message." + (HouraiElixirUtil.isImmortal(user) ? "already_immortal" : "become_immortal")), true);
-			}
-			ImmortalEntitiesComponent immortalEntitiesComponent = world.getServer().getOverworld().getComponent(ModWorldComponents.IMMORTAL_ENTITIES);
-			if (!immortalEntitiesComponent.getImmortalEntities().contains(user.getUuid())) {
-				immortalEntitiesComponent.getImmortalEntities().add(user.getUuid());
-			}
-		}
-		return Items.POTION.finishUsing(stack, world, user);
+	public UseAction getUseAction(ItemStack stack) {
+		return UseAction.DRINK;
 	}
 
 	@Override

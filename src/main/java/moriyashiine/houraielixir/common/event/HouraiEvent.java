@@ -1,41 +1,44 @@
-package moriyashiine.houraielixir.common.util;
+/*
+ * All Rights Reserved (c) 2022 MoriyaShiine
+ */
 
-import moriyashiine.houraielixir.common.component.entity.HouraiComponent;
+package moriyashiine.houraielixir.common.event;
+
+import moriyashiine.houraielixir.common.HouraiElixir;
 import moriyashiine.houraielixir.common.registry.ModEntityComponents;
 import moriyashiine.houraielixir.common.registry.ModSoundEvents;
-import moriyashiine.houraielixir.common.registry.ModWorldComponents;
 import net.fabricmc.fabric.api.dimension.v1.FabricDimensions;
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.TeleportTarget;
 
-public class HouraiElixirUtil {
-	public static boolean isImmortal(LivingEntity entity) {
-		return entity.getServer().getOverworld().getComponent(ModWorldComponents.IMMORTAL_ENTITIES).getImmortalEntities().contains(entity.getUuid());
-	}
-
-	@SuppressWarnings("ConstantConditions")
-	public static float handleDamage(LivingEntity entity, DamageSource source, float amount) {
-		if (!entity.world.isClient && isImmortal(entity) && entity.getHealth() - amount <= 0) {
+public class HouraiEvent implements ServerLivingEntityEvents.AllowDeath {
+	@Override
+	public boolean allowDeath(LivingEntity entity, DamageSource damageSource, float damageAmount) {
+		if (HouraiElixir.isImmortal(entity)) {
 			entity.world.playSound(null, entity.getBlockPos(), ModSoundEvents.ENTITY_GENERIC_RESURRECT, entity.getSoundCategory(), 1, 1);
-			if (entity.getY() <= entity.world.getBottomY() && source == DamageSource.OUT_OF_WORLD) {
+			if (entity.getY() <= entity.world.getBottomY() && damageSource.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
 				ServerWorld world = entity.world.getServer().getOverworld();
 				BlockPos worldSpawnPos = world.getSpawnPos();
 				if (entity instanceof ServerPlayerEntity player) {
 					world = entity.world.getServer().getWorld(player.getSpawnPointDimension());
-					worldSpawnPos = player.getSpawnPointPosition() == null ? worldSpawnPos : player.getSpawnPointPosition();
+					BlockPos playerSpawnPos = player.getSpawnPointPosition();
+					if (playerSpawnPos != null) {
+						worldSpawnPos = playerSpawnPos;
+					}
 				}
 				FabricDimensions.teleport(entity, world, new TeleportTarget(Vec3d.of(worldSpawnPos), Vec3d.ZERO, entity.headYaw, entity.getPitch()));
 			}
 			entity.setHealth(entity.getMaxHealth());
-			HouraiComponent houraiComponent = entity.getComponent(ModEntityComponents.HOURAI);
-			houraiComponent.setWeaknessTimer(Math.min(houraiComponent.getWeaknessTimer() + 400, 1600));
-			return 0;
+			ModEntityComponents.HOURAI.maybeGet(entity).ifPresent(houraiComponent -> houraiComponent.setWeaknessTimer(Math.min(houraiComponent.getWeaknessTimer() + 400, 1600)));
+			return false;
 		}
-		return amount;
+		return true;
 	}
 }

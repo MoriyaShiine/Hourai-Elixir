@@ -4,8 +4,7 @@
   "package": "moriyashiine.houraielixir.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-	"LivingEntityMixin",
-	"PlayerEntityMixin"
+	"LivingEntityMixin"
   ],
   "injectors": {
 	"defaultRequire": 1
