@@ -25,7 +25,7 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@Inject(method = "canHaveStatusEffect", at = @At("HEAD"), cancellable = true)
 	private void houraielixir$statusEffectImmunity(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> cir) {
-		if (!world.isClient && HouraiElixir.isImmortal(LivingEntity.class.cast(this)) && ModEntityComponents.HOURAI.get(this).getWeaknessTimer() == 0 && effect.getEffectType().getCategory() != StatusEffectCategory.BENEFICIAL) {
+		if (!getWorld().isClient && HouraiElixir.isImmortal(LivingEntity.class.cast(this)) && ModEntityComponents.HOURAI.get(this).getWeaknessTimer() == 0 && effect.getEffectType().getCategory() != StatusEffectCategory.BENEFICIAL) {
 			cir.setReturnValue(false);
 		}
 	}
