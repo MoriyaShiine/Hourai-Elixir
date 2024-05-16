@@ -4,11 +4,12 @@
 
 package moriyashiine.houraielixir.common.component.entity;
 
-import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
+import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
 public class HouraiComponent implements ServerTickingComponent {
 	private final LivingEntity obj;
@@ -19,12 +20,12 @@ public class HouraiComponent implements ServerTickingComponent {
 	}
 
 	@Override
-	public void readFromNbt(NbtCompound tag) {
+	public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
 		weaknessTimer = tag.getInt("WeaknessTimer");
 	}
 
 	@Override
-	public void writeToNbt(NbtCompound tag) {
+	public void writeToNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
 		tag.putInt("WeaknessTimer", weaknessTimer);
 	}
 

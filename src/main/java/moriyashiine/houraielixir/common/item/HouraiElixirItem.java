@@ -6,10 +6,8 @@ package moriyashiine.houraielixir.common.item;
 
 import moriyashiine.houraielixir.common.HouraiElixir;
 import moriyashiine.houraielixir.common.registry.ModWorldComponents;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.item.TooltipType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -79,9 +77,8 @@ public class HouraiElixirItem extends Item {
 		return 16;
 	}
 
-	@Environment(EnvType.CLIENT)
 	@Override
-	public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		tooltip.add(Text.translatable(HouraiElixir.MOD_ID + ".tooltip.hourai_elixir").formatted(Formatting.GRAY));
 	}
 }

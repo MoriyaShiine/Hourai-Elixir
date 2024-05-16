@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.2-SNAPSHOT'
+    id 'fabric-loom' version '1.6-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -13,7 +13,7 @@ base {
 repositories {
     maven {
         name "cardinal components"
-        url "https://ladysnake.jfrog.io/artifactory/mods"
+        url "https://maven.ladysnake.org/releases"
     }
 }
 
@@ -22,9 +22,9 @@ dependencies {
     mappings "net.fabricmc:yarn:${yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${loader_version}"
 
-    modApi include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}")
-    modApi include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}")
-    modApi include("dev.onyxstudios.cardinal-components-api:cardinal-components-world:${cardinal_components_version}")
+    modApi include("org.ladysnake.cardinal-components-api:cardinal-components-base:${cardinal_components_version}")
+    modApi include("org.ladysnake.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}")
+    modApi include("org.ladysnake.cardinal-components-api:cardinal-components-world:${cardinal_components_version}")
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
 }
@@ -38,14 +38,14 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-    it.options.release = 17
+    it.options.release = 21
 }
 
 java {
     withSourcesJar()
 
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 jar {
