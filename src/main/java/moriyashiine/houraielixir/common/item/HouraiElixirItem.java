@@ -6,13 +6,13 @@ package moriyashiine.houraielixir.common.item;
 import moriyashiine.houraielixir.common.HouraiElixir;
 import moriyashiine.houraielixir.common.registry.ModWorldComponents;
 import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.client.item.TooltipType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
 import net.minecraft.item.Items;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
@@ -72,7 +72,7 @@ public class HouraiElixirItem extends Item {
 	}
 
 	@Override
-	public int getMaxUseTime(ItemStack stack) {
+	public int getMaxUseTime(ItemStack stack, LivingEntity user) {
 		return 16;
 	}
 

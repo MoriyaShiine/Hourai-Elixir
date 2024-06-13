@@ -6,7 +6,6 @@ package moriyashiine.houraielixir.common.event;
 import moriyashiine.houraielixir.common.HouraiElixir;
 import moriyashiine.houraielixir.common.registry.ModEntityComponents;
 import moriyashiine.houraielixir.common.registry.ModSoundEvents;
-import net.fabricmc.fabric.api.dimension.v1.FabricDimensions;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -32,7 +31,7 @@ public class HouraiEvent implements ServerLivingEntityEvents.AllowDeath {
 						spawnPos = playerSpawnPos;
 					}
 				}
-				FabricDimensions.teleport(entity, world, new TeleportTarget(Vec3d.of(spawnPos), Vec3d.ZERO, entity.headYaw, entity.getPitch()));
+				entity.teleportTo(new TeleportTarget(world, Vec3d.of(spawnPos), Vec3d.ZERO, entity.getHeadYaw(), entity.getPitch(), TeleportTarget.NO_OP));
 			}
 			entity.setHealth(entity.getMaxHealth());
 			ModEntityComponents.HOURAI.maybeGet(entity).ifPresent(houraiComponent -> houraiComponent.setWeaknessTimer(Math.min(houraiComponent.getWeaknessTimer() + 400, 1600)));
