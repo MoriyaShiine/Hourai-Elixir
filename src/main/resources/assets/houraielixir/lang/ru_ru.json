@@ -1,0 +1,7 @@
+{
+  "item.houraielixir.hourai_elixir": "Хорайский Эликсир",
+  "houraielixir.subtitles.entity.generic.resurrect": "Существо возрождается",
+  "houraielixir.tooltip.hourai_elixir": "Дарует бессмертие после употребления.",
+  "houraielixir.message.become_immortal": "Выпив легендарную смесь, вы стали необратимо бессмертными.",
+  "houraielixir.message.already_immortal": "Выпивание смеси ничего не изменило, поскольку вы уже бессмертны."
+}
