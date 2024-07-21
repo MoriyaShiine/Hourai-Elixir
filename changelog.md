@@ -1,4 +1,11 @@
 ------------------------------------------------------
+Version 1.21-r1
+------------------------------------------------------
+- update to 1.21
+- merge https://github.com/MoriyaShiine/hourai-elixir/pull/7
+- merge https://github.com/MoriyaShiine/hourai-elixir/pull/8
+
+------------------------------------------------------
 Version 1.20.6-r1
 ------------------------------------------------------
 - update to 1.20.6
