@@ -3,23 +3,24 @@
  */
 package moriyashiine.houraielixir.common.component.world;
 
-import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
 import net.minecraft.registry.RegistryWrapper;
 import org.ladysnake.cca.api.v3.component.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 public class ImmortalEntitiesComponent implements Component {
-	private final List<UUID> immortalEntities = new ArrayList<>();
+	private final Set<UUID> immortalEntities = new HashSet<>();
 
 	@Override
 	public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
-		NbtList immortalEntities = tag.getList("ImmortalEntities", NbtType.STRING);
+		this.immortalEntities.clear();
+		NbtList immortalEntities = tag.getList("ImmortalEntities", NbtElement.STRING_TYPE);
 		for (int i = 0; i < immortalEntities.size(); i++) {
 			this.immortalEntities.add(UUID.fromString(immortalEntities.getString(i)));
 		}
@@ -34,7 +35,7 @@ public class ImmortalEntitiesComponent implements Component {
 		tag.put("ImmortalEntities", immortalEntities);
 	}
 
-	public List<UUID> getImmortalEntities() {
+	public Set<UUID> getImmortalEntities() {
 		return immortalEntities;
 	}
 }

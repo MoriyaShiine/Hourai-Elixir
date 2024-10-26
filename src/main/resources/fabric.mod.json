@@ -21,10 +21,10 @@
 	  "moriyashiine.houraielixir.common.HouraiElixir"
 	],
 	"cardinal-components-entity": [
-	  "moriyashiine.houraielixir.common.registry.ModEntityComponents"
+	  "moriyashiine.houraielixir.common.init.ModEntityComponents"
 	],
 	"cardinal-components-world": [
-	  "moriyashiine.houraielixir.common.registry.ModWorldComponents"
+	  "moriyashiine.houraielixir.common.init.ModWorldComponents"
 	]
   },
   "mixins": [
@@ -32,7 +32,7 @@
   ],
   "depends": {
 	"fabricloader": "*",
-	"minecraft": "~1.21",
+	"minecraft": "~1.21.2",
 	"java": ">=21",
 	"fabric-api": "*"
   },

@@ -4,9 +4,10 @@
 package moriyashiine.houraielixir.common;
 
 import moriyashiine.houraielixir.common.event.HouraiEvent;
-import moriyashiine.houraielixir.common.registry.ModItems;
-import moriyashiine.houraielixir.common.registry.ModSoundEvents;
-import moriyashiine.houraielixir.common.registry.ModWorldComponents;
+import moriyashiine.houraielixir.common.init.ModConsumeEffectTypes;
+import moriyashiine.houraielixir.common.init.ModItems;
+import moriyashiine.houraielixir.common.init.ModSoundEvents;
+import moriyashiine.houraielixir.common.init.ModWorldComponents;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.entity.Entity;
@@ -17,6 +18,7 @@ public class HouraiElixir implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		ModConsumeEffectTypes.init();
 		ModItems.init();
 		ModSoundEvents.init();
 		ServerLivingEntityEvents.ALLOW_DEATH.register(new HouraiEvent());

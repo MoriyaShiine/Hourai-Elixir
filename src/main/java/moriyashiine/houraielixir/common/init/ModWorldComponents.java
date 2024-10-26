@@ -1,10 +1,11 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
-package moriyashiine.houraielixir.common.registry;
+package moriyashiine.houraielixir.common.init;
 
 import moriyashiine.houraielixir.common.HouraiElixir;
 import moriyashiine.houraielixir.common.component.world.ImmortalEntitiesComponent;
+import net.minecraft.world.World;
 import org.ladysnake.cca.api.v3.component.ComponentKey;
 import org.ladysnake.cca.api.v3.component.ComponentRegistry;
 import org.ladysnake.cca.api.v3.world.WorldComponentFactoryRegistry;
@@ -15,6 +16,6 @@ public class ModWorldComponents implements WorldComponentInitializer {
 
 	@Override
 	public void registerWorldComponentFactories(WorldComponentFactoryRegistry registry) {
-		registry.register(IMMORTAL_ENTITIES, world -> new ImmortalEntitiesComponent());
+		registry.registerFor(World.OVERWORLD, IMMORTAL_ENTITIES, world -> new ImmortalEntitiesComponent());
 	}
 }

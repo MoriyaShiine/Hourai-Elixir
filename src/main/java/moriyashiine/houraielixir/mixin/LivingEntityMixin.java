@@ -4,7 +4,7 @@
 package moriyashiine.houraielixir.mixin;
 
 import moriyashiine.houraielixir.common.HouraiElixir;
-import moriyashiine.houraielixir.common.registry.ModEntityComponents;
+import moriyashiine.houraielixir.common.init.ModEntityComponents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;

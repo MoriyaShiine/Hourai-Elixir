@@ -1,7 +1,7 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
-package moriyashiine.houraielixir.common.registry;
+package moriyashiine.houraielixir.common.init;
 
 import moriyashiine.houraielixir.common.HouraiElixir;
 import moriyashiine.houraielixir.common.component.entity.HouraiComponent;
