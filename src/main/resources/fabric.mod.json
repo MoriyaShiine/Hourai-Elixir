@@ -17,6 +17,9 @@
   "icon": "assets/houraielixir/icon.png",
   "environment": "*",
   "entrypoints": {
+	"fabric-datagen": [
+	  "moriyashiine.houraielixir.data.ModDataGenerator"
+	],
 	"main": [
 	  "moriyashiine.houraielixir.common.HouraiElixir"
 	],
